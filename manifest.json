@@ -1,0 +1,16 @@
+{
+  "name": "go/chrome-extension",
+  "version": "1.0",
+  "description": "URL Shortener",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "webRequestBlocking",
+    "webRequest",
+    "http://localhost/",
+    "*://go/*"
+  ],
+  "manifest_version": 2
+}
