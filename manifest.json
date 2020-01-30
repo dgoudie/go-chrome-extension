@@ -6,11 +6,6 @@
     "scripts": ["background.js"],
     "persistent": true
   },
-  "permissions": [
-    "webRequestBlocking",
-    "webRequest",
-    "http://localhost/",
-    "*://go/*"
-  ],
+  "permissions": ["webRequestBlocking", "webRequest", "storage", "*://go/*"],
   "manifest_version": 2
 }
