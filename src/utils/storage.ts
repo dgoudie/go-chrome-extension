@@ -7,7 +7,6 @@ import { sortBy } from 'lodash';
 export const getAllGoLinks = () =>
     new Observable<GoLinkItem[]>(observer =>
         chrome.storage.sync.get(['goLinks'], ({ goLinks }) => {
-            console.log('Retrieved GoLinks:', goLinks);
             observer.next(goLinks);
             observer.complete();
         })
@@ -17,7 +16,6 @@ export const getAllGoLinks = () =>
                 ? of(urls)
                 : new Observable<void>(observer =>
                       chrome.storage.sync.set({ goLinks: [] }, () => {
-                          console.log('Set GoLinks to Empty Array.');
                           observer.next();
                           observer.complete();
                       })
@@ -52,7 +50,6 @@ export const addGoLinks = (newGoLinks: GoLinkItem[]) => {
             goLinks =>
                 new Observable<GoLinkItem[]>(observer =>
                     chrome.storage.sync.set({ goLinks }, () => {
-                        console.log('Set GoLinks:', goLinks);
                         observer.next(goLinks);
                         observer.complete();
                     })

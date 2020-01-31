@@ -56,13 +56,9 @@ export default class Input extends PureComponent<Props, State> {
                     <TextField
                         value={fullLink}
                         label="Full Link"
-                        prefix="https://"
                         onChange={(event: any) =>
                             this.setState({
-                                fullLink: event.target.value.replace(
-                                    /https?:\/\//i,
-                                    ''
-                                )
+                                fullLink: event.target.value
                             })
                         }
                         errorMessage={fullLinkErrorMessage}
