@@ -1,10 +1,14 @@
 import { Observable, of } from 'rxjs';
-import { concatMap, mapTo } from 'rxjs/operators';
+import { concatMap, map, mapTo, tap } from 'rxjs/operators';
 
-export const getAllUrls = () =>
-    new Observable<string>(observer =>
-        chrome.storage.sync.get(['urls'], ({ urls }) => {
-            observer.next(urls);
+import { GoLinkItem } from '../models/go-link-item';
+import { sortBy } from 'lodash';
+
+export const getAllGoLinks = () =>
+    new Observable<GoLinkItem[]>(observer =>
+        chrome.storage.sync.get(['goLinks'], ({ goLinks }) => {
+            console.log('Retrieved GoLinks:', goLinks);
+            observer.next(goLinks);
             observer.complete();
         })
     ).pipe(
@@ -12,22 +16,47 @@ export const getAllUrls = () =>
             !!urls
                 ? of(urls)
                 : new Observable<void>(observer =>
-                      chrome.storage.sync.set({ urls: {} }, () => {
+                      chrome.storage.sync.set({ goLinks: [] }, () => {
+                          console.log('Set GoLinks to Empty Array.');
+                          observer.next();
                           observer.complete();
                       })
-                  ).pipe(mapTo({}))
+                  ).pipe(mapTo([]))
         )
     );
 
-export const getUrl = (goLinkRequested: string) =>
+export const getGoLink = (shortName: string) =>
     new Observable<string>(observer =>
-        chrome.storage.sync.get(['urls'], ({ urls }) => {
-            const url = urls[goLinkRequested];
-            if (!!url) {
-                observer.next(url);
-            } else {
-                observer.error();
+        chrome.storage.sync.get(
+            ['goLinks'],
+            ({ goLinks }: { goLinks: GoLinkItem[] }) => {
+                const goLink = goLinks.find(
+                    goLink => goLink.shortName === shortName
+                );
+                if (!!goLink) {
+                    observer.next(goLink.fullLink);
+                } else {
+                    observer.error();
+                }
+                observer.complete();
             }
-            observer.complete();
-        })
+        )
     );
+
+export const addGoLinks = (newGoLinks: GoLinkItem[]) => {
+    return getAllGoLinks().pipe(
+        map(existingGoLinks =>
+            sortBy([...existingGoLinks, ...newGoLinks], 'shortName')
+        ),
+        concatMap(
+            goLinks =>
+                new Observable<GoLinkItem[]>(observer =>
+                    chrome.storage.sync.set({ goLinks }, () => {
+                        console.log('Set GoLinks:', goLinks);
+                        observer.next(goLinks);
+                        observer.complete();
+                    })
+                )
+        )
+    );
+};

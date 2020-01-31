@@ -12,8 +12,8 @@ subject
     )
     .subscribe(() => open('http://reload.extensions'));
 
-if (!fs.existsSync('./dist/src')) {
-    fs.mkdirSync('./dist/src');
+if (!fs.existsSync('./dist') || fs.existsSync('./dist/src')) {
+    fs.mkdirSync('./dist/src', { recursive: true });
 }
 
 fs.watch('./dist/src', { recursive: true }, (event, filename) =>
