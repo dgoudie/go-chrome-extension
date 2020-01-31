@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        "sourceMap": true /* Generates corresponding '.map' file. */,
+        "jsx": "react"
+    }
+}

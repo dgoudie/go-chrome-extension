@@ -1,0 +1,20 @@
+{
+    "name": "go/chrome-extension",
+    "version": "1.0",
+    "description": "URL Shortener",
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": true
+    },
+    "browser_action": {
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": [
+        "activeTab",
+        "webRequestBlocking",
+        "webRequest",
+        "storage",
+        "*://go/*"
+    ],
+    "manifest_version": 2
+}

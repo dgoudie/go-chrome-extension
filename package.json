@@ -1,15 +1,34 @@
 {
-  "name": "go-chrome-extension",
-  "version": "1.0.0",
-  "description": "",
-  "main": "background.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+    "name": "go-chrome-extension",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "build": "rimraf ./dist && webpack --mode production",
+        "start": "concurrently \"node extension-reloader.js\" \"webpack-dev-server --mode development --progress --color\""
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {},
+    "devDependencies": {
+        "@types/chrome": "0.0.93",
+        "concurrently": "^5.1.0",
+        "copy-webpack-plugin": "^5.1.1",
+        "css-loader": "^3.4.2",
+        "glob": "^7.1.6",
+        "node-sass": "^4.13.1",
+        "nodemon": "^2.0.2",
+        "open": "^7.0.1",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "rimraf": "^3.0.0",
+        "rxjs": "^6.5.4",
+        "sass-loader": "^8.0.2",
+        "style-loader": "^1.1.3",
+        "ts-loader": "^6.2.1",
+        "tsc-watch": "^4.1.0",
+        "typescript": "^3.7.5",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10",
+        "webpack-dev-server": "^3.10.1"
+    }
 }
