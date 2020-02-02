@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "build": "rimraf ./dist && webpack --mode production",
-        "start": "concurrently \"node extension-reloader.js\" \"webpack-dev-server --mode development --progress --color\""
+        "start": "rimraf ./dist && concurrently \"node extension-reloader.js\" \"webpack-dev-server --mode development --progress --color\""
     },
     "author": "",
     "license": "ISC",
@@ -18,6 +18,7 @@
         "css-loader": "^3.4.2",
         "glob": "^7.1.6",
         "lodash": "^4.17.15",
+        "mini-css-extract-plugin": "^0.9.0",
         "node-sass": "^4.13.1",
         "office-ui-fabric-react": "^7.87.0",
         "open": "^7.0.1",

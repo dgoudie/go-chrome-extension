@@ -1,0 +1,9 @@
+.manager {
+    --y-margin: 15px;
+    background: var(--background-light);
+    border-radius: 14px;
+    padding: 10px var(--y-margin);
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+}

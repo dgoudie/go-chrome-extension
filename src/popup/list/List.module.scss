@@ -1,0 +1,41 @@
+.list {
+    list-style: none;
+    margin: 0 8px 0 0;
+    padding: 0;
+}
+.listItem {
+    padding: 8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:not(:last-child) {
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+.shortName {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 4;
+    color: var(--color-high-emphasis);
+}
+.fullLink {
+    color: var(--color-medium-emphasis);
+}
+.listItemDeleteButton {
+    color: var(--blue-color);
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 100ms linear;
+    &:hover {
+        background: var(--blue-color-more-faded);
+    }
+    &:active {
+        background: var(--blue-color-faded);
+    }
+}

@@ -1,0 +1,39 @@
+@import '../mixins';
+
+.input {
+    font-size: 15px;
+    background: var(--input-background);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-radius: 9999px;
+    margin-bottom: 10px;
+
+    span {
+        margin: 0 0 0 12px;
+        font-weight: 700;
+    }
+
+    input {
+        background: transparent;
+        border: none;
+        outline: none;
+        flex: 1;
+        color: var(--color-high-emphasis);
+        &::placeholder {
+            color: var(--color-medium-emphasis);
+        }
+        height: 100%;
+        font-size: 15px;
+        font-weight: 700;
+    }
+}
+
+.cancelButton {
+    @include standardButton;
+}
+
+.submitButton {
+    @include standardButton;
+    @include primaryButton;
+}

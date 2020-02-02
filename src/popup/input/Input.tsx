@@ -15,6 +15,7 @@ import { GoLinkItem } from '../../models/go-link-item';
 interface Props {
     existingGoLinks: GoLinkItem[];
     onGoLinkSubmitted: (_: GoLinkItem) => void;
+    className?: string;
 }
 
 interface State {
@@ -39,14 +40,14 @@ export default class Input extends PureComponent<Props, State> {
             fullLinkErrorMessage
         } = this._validateState(this.state);
         return (
-            <Stack>
+            <Stack className={this.props.className}>
                 <FocusZone
                     handleTabKey={FocusZoneTabbableElements.all}
                     isCircularNavigation={true}
                 >
                     <TextField
                         value={shortName}
-                        label="Short Name"
+                        label='Short Name'
                         componentRef={this.inputRef}
                         onChange={(event: any) =>
                             this.setState({ shortName: event.target.value })
@@ -55,7 +56,7 @@ export default class Input extends PureComponent<Props, State> {
                     />
                     <TextField
                         value={fullLink}
-                        label="Full Link"
+                        label='Full Link'
                         onChange={(event: any) =>
                             this.setState({
                                 fullLink: event.target.value

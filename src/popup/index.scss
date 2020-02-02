@@ -1,0 +1,23 @@
+html {
+    --background: #15202b;
+    --background-light: #192734;
+    --background-light-hover: #21303d;
+    --input-background: #253341;
+    --blue-color: #1da1f2;
+    --blue-color-faded: rgba(29, 161, 242, 0.2);
+    --blue-color-more-faded: rgba(29, 161, 242, 0.1);
+    --button-color: var(--blue-color);
+    --button-color-hover: #1a8cd3;
+    --color-high-emphasis: white;
+    --color-medium-emphasis: #8899a6;
+    --border-color: #38444d;
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Ubuntu, 'Helvetica Neue', sans-serif;
+    background: var(--background);
+    color: var(--color-high-emphasis);
+    font-family: var(--font);
+}
+
+body {
+    margin: 0;
+}

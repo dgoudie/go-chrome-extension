@@ -1,0 +1,43 @@
+@import '../mixins';
+
+.input {
+    font-size: 15px;
+    background: var(--input-background);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-radius: 9999px;
+
+    &Icon {
+        color: var(--color-medium-emphasis);
+        margin: 0 12px;
+    }
+    input {
+        background: transparent;
+        border: none;
+        outline: none;
+        flex: 1;
+        color: var(--color-high-emphasis);
+        &::placeholder {
+            color: var(--color-medium-emphasis);
+        }
+        height: 100%;
+        font-size: 15px;
+        font-weight: 700;
+    }
+}
+
+.divider {
+    margin: 0 calc(var(--y-margin) * -1);
+    height: 1px;
+    background: var(--border-color);
+}
+
+.buttonWrapper {
+    flex: 1;
+}
+
+.button {
+    @include standardButton;
+    @include primaryButton;
+}

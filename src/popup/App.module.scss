@@ -1,0 +1,13 @@
+.app {
+    display: flex;
+    width: calc(800px);
+    min-height: 400px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+.list {
+    flex: 3;
+}
+.manager {
+    flex: 2;
+}
