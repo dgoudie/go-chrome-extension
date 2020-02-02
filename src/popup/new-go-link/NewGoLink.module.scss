@@ -29,11 +29,12 @@
     }
 }
 
-.cancelButton {
+.cancelButton,
+.submitButton {
     @include standardButton;
+    flex: 1;
 }
 
 .submitButton {
-    @include standardButton;
     @include primaryButton;
 }

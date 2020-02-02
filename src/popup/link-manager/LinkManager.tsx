@@ -16,7 +16,11 @@ class LinkManager extends Component<Props, {}> {
         return (
             <div className={`${this.props.className} ${styles.manager}`}>
                 {addNewLinkSectionVisible ? (
-                    <NewGoLink />
+                    <NewGoLink
+                        onAddNewLinkCancelled={() =>
+                            this.setState({ addNewLinkSectionVisible: false })
+                        }
+                    />
                 ) : (
                     <LinkSearcher
                         onAddNewButtonClicked={() =>
