@@ -1,10 +1,30 @@
 .list {
     list-style: none;
-    margin: 0 8px 0 0;
+    margin: -10px 8px -10px 0;
     padding: 0;
+    overflow-y: auto;
+    height: 450px;
+
+    &::-webkit-scrollbar {
+        width: 15px;
+        height: 10px;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--blue-color);
+        border-radius: 10px;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 3px;
+        background-clip: padding-box;
+        min-height: 75px;
+    }
 }
 .listItem {
-    padding: 8;
+    margin: 10px 0;
+    padding: 0 0 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,12 +46,13 @@
     background: transparent;
     border: none;
     outline: none;
-    border-radius: 100%;
+    border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background 100ms linear;
+    padding: 7px;
     &:hover {
         background: var(--blue-color-more-faded);
     }

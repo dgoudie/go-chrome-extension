@@ -7,6 +7,7 @@ import { GoLinkItem } from '../../models/go-link-item';
 interface Props {
     className?: string;
     onGoLinkSubmitted: (_: GoLinkItem) => void;
+    onSearchTextChanged: (_: string) => void;
     goLinks: GoLinkItem[];
 }
 
@@ -31,6 +32,7 @@ class LinkManager extends Component<Props, {}> {
                     />
                 ) : (
                     <LinkSearcher
+                        onSearchTextChanged={this.props.onSearchTextChanged}
                         onAddNewButtonClicked={() =>
                             this.setState({ addNewLinkSectionVisible: true })
                         }

@@ -3,16 +3,40 @@ import React, { Component } from 'react';
 import { GoLinkItem } from '../../models/go-link-item';
 import { mergeStyleSets, Icon } from 'office-ui-fabric-react';
 import styles from './List.module';
+import Fuse, { FuseOptions } from 'fuse.js';
+
+const FUSE_OPTIONS: FuseOptions<GoLinkItem> = {
+    shouldSort: true,
+    threshold: 0.6,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: ['shortName', 'fullLink']
+};
 
 interface Props {
     goLinks: GoLinkItem[];
     className?: string;
     onGoLinkDeleted: (_: GoLinkItem) => void;
+    searchText: string;
 }
 
-export default class List extends Component<Props, {}> {
+interface State {
+    fuse: Fuse<GoLinkItem, FuseOptions<GoLinkItem>>;
+}
+
+export default class List extends Component<Props, State> {
+    state = {
+        fuse: new Fuse(this.props.goLinks, FUSE_OPTIONS)
+    };
+
     render() {
-        const goLinkItems = this.props.goLinks.map(goLink => (
+        const { searchText, goLinks } = this.props;
+        const goLinksToUse = !!searchText
+            ? (this.state.fuse.search(searchText) as GoLinkItem[])
+            : goLinks;
+        const goLinkItems = goLinksToUse.map(goLink => (
             <li className={styles.listItem} key={goLink.shortName}>
                 <div>
                     <div className={styles.shortName}>
@@ -33,5 +57,9 @@ export default class List extends Component<Props, {}> {
                 {goLinkItems}
             </ul>
         );
+    }
+
+    componentWillReceiveProps(nextProps: Props) {
+        this.setState({ fuse: new Fuse(nextProps.goLinks, FUSE_OPTIONS) });
     }
 }

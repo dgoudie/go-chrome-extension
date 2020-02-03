@@ -5,6 +5,7 @@ import { Icon, Stack } from 'office-ui-fabric-react';
 
 interface Props {
     onAddNewButtonClicked: () => void;
+    onSearchTextChanged: (_: string) => void;
 }
 
 class LinkSearcher extends Component<Props, {}> {
@@ -17,6 +18,9 @@ class LinkSearcher extends Component<Props, {}> {
                     <input
                         placeholder='Search Go Links...'
                         ref={this.searchRef}
+                        onChange={event =>
+                            this.props.onSearchTextChanged(event.target.value)
+                        }
                     />
                 </div>
                 <div className={styles.divider}></div>

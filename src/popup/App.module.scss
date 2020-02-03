@@ -1,9 +1,8 @@
 .app {
     display: flex;
-    width: calc(800px);
-    min-height: 400px;
     padding: 12px;
     box-sizing: border-box;
+    width: 780px;
 }
 .list {
     flex: 3;

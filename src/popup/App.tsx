@@ -13,19 +13,24 @@ class App extends Component {
         getAllGoLinks().subscribe(goLinks => this.setState({ goLinks }));
     }
     state = {
+        searchText: '',
         goLinks: []
     };
 
     render() {
-        const { goLinks } = this.state;
+        const { goLinks, searchText } = this.state;
         return (
             <div className={styles.app}>
                 <List
+                    searchText={searchText}
                     className={styles.list}
                     goLinks={goLinks}
                     onGoLinkDeleted={this._onGoLinkDeleted}
                 />
                 <LinkManager
+                    onSearchTextChanged={text =>
+                        this.setState({ searchText: text })
+                    }
                     className={styles.manager}
                     onGoLinkSubmitted={this._onGoLinkSubmitted}
                     goLinks={goLinks}

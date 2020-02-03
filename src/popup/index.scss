@@ -16,8 +16,12 @@ html {
     background: var(--background);
     color: var(--color-high-emphasis);
     font-family: var(--font);
+    box-sizing: border-box;
 }
 
 body {
     margin: 0;
+}
+
+#content {
 }

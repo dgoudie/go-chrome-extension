@@ -8,7 +8,7 @@ import {
 import { GoLinkItem } from '../../models/go-link-item';
 
 const HTTP_REGEX = /https?:\/\//i;
-const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(:[0-9]+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+const URL_REGEX = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 interface Props {
     className?: string;
@@ -43,7 +43,6 @@ class NewGoLink extends Component<Props, State> {
             fullLinkErrorMessageClasses,
             fullLinkInputClasses
         } = this.buildClassLists(this.state);
-        console.log(fullLinkErrorMessageClasses);
         return (
             <Stack
                 className={`${this.props.className}`}
@@ -62,6 +61,7 @@ class NewGoLink extends Component<Props, State> {
                             onChange={(event: any) =>
                                 this.setState({ shortName: event.target.value })
                             }
+                            onKeyPress={this._onKeyPress}
                         />
                         <span
                             className={shortNameErrorMessageClasses.join(' ')}
@@ -78,6 +78,7 @@ class NewGoLink extends Component<Props, State> {
                                     fullLink: event.target.value
                                 })
                             }
+                            onKeyPress={this._onKeyPress}
                         />
                         <span className={fullLinkErrorMessageClasses.join(' ')}>
                             {fullLinkErrorMessage}
@@ -111,10 +112,15 @@ class NewGoLink extends Component<Props, State> {
         !!this.shortNameRef.current && this.shortNameRef.current.focus();
     }
 
+    private _onKeyPress = event => event.key === 'Enter' && this._onSubmit();
+
     private _onSubmit = () => {
         let { shortName, fullLink, tempSaved } = this.state;
-        const stateInvalid = !!Object.keys(this._validateState(this.state))
-            .length;
+        const {
+            shortNameErrorMessage,
+            fullLinkErrorMessage
+        } = this._validateState(this.state);
+        const stateInvalid = !!shortNameErrorMessage || !!fullLinkErrorMessage;
         if (!shortName || !fullLink || stateInvalid || tempSaved) {
             return;
         }
@@ -124,8 +130,8 @@ class NewGoLink extends Component<Props, State> {
         const goLink: GoLinkItem = { shortName, fullLink };
         this.setState({ tempSaved: true });
         setTimeout(() => {
-            this.props.onGoLinkSubmitted(goLink);
             this.setState({ shortName: '', fullLink: '', tempSaved: false });
+            this.props.onGoLinkSubmitted(goLink);
         }, 1500);
     };
 
@@ -136,17 +142,19 @@ class NewGoLink extends Component<Props, State> {
         } = this._validateState(state);
         const { shortName, fullLink } = state;
         let shortNameInputClasses = [styles.input, styles.inputWithSpan];
-        !!shortNameErrorMessage &&
-            (shortNameInputClasses = [
+        if (!!shortName && !!shortNameErrorMessage) {
+            shortNameInputClasses = [
                 ...shortNameInputClasses,
                 styles.inputErrorMessageVisible
-            ]);
+            ];
+        }
         let fullLinkInputClasses = [styles.input];
-        !!fullLinkErrorMessage &&
-            (fullLinkInputClasses = [
+        if (!!fullLink && fullLinkErrorMessage) {
+            fullLinkInputClasses = [
                 ...fullLinkInputClasses,
                 styles.inputErrorMessageVisible
-            ]);
+            ];
+        }
         let shortNameErrorMessageClasses = [styles.errorMessage];
         if (!!shortName && !!shortNameErrorMessage) {
             shortNameErrorMessageClasses = [
