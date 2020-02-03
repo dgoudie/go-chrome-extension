@@ -8,11 +8,9 @@
     align-items: center;
     border-radius: 9999px;
     margin-bottom: 10px;
-
-    span {
-        margin: 0 0 0 12px;
-        font-weight: 700;
-    }
+    padding: 0 0 0 12px;
+    position: relative;
+    transition: margin-bottom 150ms linear;
 
     input {
         background: transparent;
@@ -27,6 +25,35 @@
         font-size: 15px;
         font-weight: 700;
     }
+
+    &WithSpan {
+        padding: 0;
+    }
+
+    &GoSpan {
+        margin: 0 0 0 12px;
+        font-weight: 700;
+    }
+
+    &ErrorMessageVisible {
+        margin-bottom: 1.5em;
+    }
+}
+
+.errorMessage {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    font-size: 12px;
+    font-weight: normal;
+    color: crimson;
+    opacity: 0;
+    transition: opacity 150ms linear;
+    margin-left: 12px;
+}
+
+.errorMessageVisible {
+    opacity: 1;
 }
 
 .cancelButton,
@@ -37,4 +64,8 @@
 
 .submitButton {
     @include primaryButton;
+}
+
+.saved {
+    background: forestgreen;
 }

@@ -25,12 +25,11 @@ class App extends Component {
                     goLinks={goLinks}
                     onGoLinkDeleted={this._onGoLinkDeleted}
                 />
-                <LinkManager className={styles.manager} />
-                {/* <Input
-                    className={classes.input}
-                    existingGoLinks={goLinks}
+                <LinkManager
+                    className={styles.manager}
                     onGoLinkSubmitted={this._onGoLinkSubmitted}
-                /> */}
+                    goLinks={goLinks}
+                />
             </div>
         );
     }

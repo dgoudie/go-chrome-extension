@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import NewGoLink from '../new-go-link/NewGoLink';
 import LinkSearcher from '../link-searcher/LinkSearcher';
 import styles from './LinkManager.module';
+import { GoLinkItem } from '../../models/go-link-item';
 
 interface Props {
     className?: string;
+    onGoLinkSubmitted: (_: GoLinkItem) => void;
+    goLinks: GoLinkItem[];
 }
 
 class LinkManager extends Component<Props, {}> {
@@ -17,6 +20,11 @@ class LinkManager extends Component<Props, {}> {
             <div className={`${this.props.className} ${styles.manager}`}>
                 {addNewLinkSectionVisible ? (
                     <NewGoLink
+                        goLinks={this.props.goLinks}
+                        onGoLinkSubmitted={goLink => {
+                            this.props.onGoLinkSubmitted(goLink);
+                            this.setState({ addNewLinkSectionVisible: false });
+                        }}
                         onAddNewLinkCancelled={() =>
                             this.setState({ addNewLinkSectionVisible: false })
                         }
