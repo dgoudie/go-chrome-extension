@@ -1,6 +1,7 @@
-import { Icon, Stack } from 'office-ui-fabric-react';
 import React, { Component } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import styles from './LinkSearcher.module';
 
 interface Props {
@@ -12,9 +13,12 @@ class LinkSearcher extends Component<Props, {}> {
     searchRef = React.createRef<HTMLInputElement>();
     render() {
         return (
-            <Stack tokens={{ childrenGap: 10 }}>
+            <div className={styles.linkSearcher}>
                 <div className={styles.input}>
-                    <Icon className={styles.inputIcon} iconName="Search" />
+                    <FontAwesomeIcon
+                        className={styles.inputIcon}
+                        icon={faSearch}
+                    />
                     <input
                         placeholder="Search Go Links..."
                         ref={this.searchRef}
@@ -32,7 +36,7 @@ class LinkSearcher extends Component<Props, {}> {
                         Create Go Link
                     </button>
                 </div>
-            </Stack>
+            </div>
         );
     }
     componentDidMount() {

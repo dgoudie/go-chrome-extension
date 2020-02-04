@@ -1,8 +1,3 @@
-import {
-    FocusZone,
-    FocusZoneTabbableElements,
-    Stack
-} from 'office-ui-fabric-react';
 import React, { Component } from 'react';
 
 import { GoLinkItem } from '../../models/go-link-item';
@@ -45,67 +40,57 @@ class NewGoLink extends Component<Props, State> {
             fullLinkInputClasses
         } = this.buildClassLists(this.state);
         return (
-            <Stack
-                className={`${this.props.className}`}
-                tokens={{ childrenGap: 10 }}
-            >
-                <FocusZone
-                    handleTabKey={FocusZoneTabbableElements.all}
-                    isCircularNavigation={true}
-                >
-                    <div className={shortNameInputClasses.join(' ')}>
-                        <span className={styles.inputGoSpan}>go/</span>
-                        <input
-                            value={shortName}
-                            placeholder="..."
-                            ref={this.shortNameRef}
-                            onChange={(event: any) =>
-                                this.setState({ shortName: event.target.value })
-                            }
-                            onKeyPress={this._onKeyPress}
-                        />
-                        <span
-                            className={shortNameErrorMessageClasses.join(' ')}
-                        >
-                            {shortNameErrorMessage}
-                        </span>
-                    </div>
-                    <div className={fullLinkInputClasses.join(' ')}>
-                        <input
-                            value={fullLink}
-                            placeholder="google.com"
-                            onChange={(event: any) =>
-                                this.setState({
-                                    fullLink: event.target.value
-                                })
-                            }
-                            onKeyPress={this._onKeyPress}
-                        />
-                        <span className={fullLinkErrorMessageClasses.join(' ')}>
-                            {fullLinkErrorMessage}
-                        </span>
-                    </div>
-                    <Stack horizontal tokens={{ childrenGap: 10 }}>
-                        <button
-                            className={styles.cancelButton}
-                            onClick={() =>
-                                !this.state.tempSaved &&
-                                this.props.onAddNewLinkCancelled()
-                            }
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            className={`${styles.submitButton} ${
-                                tempSaved ? styles.saved : ''
-                            }`}
-                            onClick={this._onSubmit}
-                        >
-                            Save{tempSaved ? 'd' : ''}
-                        </button>
-                    </Stack>
-                </FocusZone>
-            </Stack>
+            <div className={`${this.props.className}`}>
+                <div className={shortNameInputClasses.join(' ')}>
+                    <span className={styles.inputGoSpan}>go/</span>
+                    <input
+                        value={shortName}
+                        placeholder="..."
+                        ref={this.shortNameRef}
+                        onChange={(event: any) =>
+                            this.setState({ shortName: event.target.value })
+                        }
+                        onKeyPress={this._onKeyPress}
+                    />
+                    <span className={shortNameErrorMessageClasses.join(' ')}>
+                        {shortNameErrorMessage}
+                    </span>
+                </div>
+                <div className={fullLinkInputClasses.join(' ')}>
+                    <input
+                        value={fullLink}
+                        placeholder="google.com"
+                        onChange={(event: any) =>
+                            this.setState({
+                                fullLink: event.target.value
+                            })
+                        }
+                        onKeyPress={this._onKeyPress}
+                    />
+                    <span className={fullLinkErrorMessageClasses.join(' ')}>
+                        {fullLinkErrorMessage}
+                    </span>
+                </div>
+                <div className={styles.buttonBar}>
+                    <button
+                        className={styles.cancelButton}
+                        onClick={() =>
+                            !this.state.tempSaved &&
+                            this.props.onAddNewLinkCancelled()
+                        }
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className={`${styles.submitButton} ${
+                            tempSaved ? styles.saved : ''
+                        }`}
+                        onClick={this._onSubmit}
+                    >
+                        Save{tempSaved ? 'd' : ''}
+                    </button>
+                </div>
+            </div>
         );
     }
     componentDidMount() {

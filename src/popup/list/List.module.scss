@@ -68,6 +68,8 @@
     cursor: pointer;
     transition: background 100ms linear;
     padding: 7px;
+    width: 27px;
+    height: 27px;
     &:hover,
     &:focus {
         background: var(--blue-color-more-faded);

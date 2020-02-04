@@ -1,8 +1,9 @@
 import Fuse, { FuseOptions } from 'fuse.js';
-import { Icon, mergeStyleSets } from 'office-ui-fabric-react';
 import React, { Component } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GoLinkItem } from '../../models/go-link-item';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import styles from './List.module';
 
 const FUSE_OPTIONS: FuseOptions<GoLinkItem> = {
@@ -54,7 +55,10 @@ export default class List extends Component<Props, State> {
                     }
                     className={styles.listItemDeleteButton}
                 >
-                    <Icon iconName="Cancel" />
+                    <FontAwesomeIcon
+                        className={styles.inputIcon}
+                        icon={faTimes}
+                    />
                 </button>
             </button>
         ));

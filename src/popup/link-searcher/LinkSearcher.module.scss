@@ -1,5 +1,11 @@
 @import '../mixins';
 
+.linkSearcher {
+    div:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
+
 .input {
     font-size: 15px;
     background: var(--input-background);

@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
-import NewGoLink from '../new-go-link/NewGoLink';
+import React, { Component, Suspense } from 'react';
+
+import { GoLinkItem } from '../../models/go-link-item';
 import LinkSearcher from '../link-searcher/LinkSearcher';
 import styles from './LinkManager.module';
-import { GoLinkItem } from '../../models/go-link-item';
+
+// import NewGoLink from '../new-go-link/NewGoLink';
+const NewGoLink = React.lazy(() => import('../new-go-link/NewGoLink'));
 
 interface Props {
     className?: string;
@@ -20,16 +23,22 @@ class LinkManager extends Component<Props, {}> {
         return (
             <div className={`${this.props.className} ${styles.manager}`}>
                 {addNewLinkSectionVisible ? (
-                    <NewGoLink
-                        goLinks={this.props.goLinks}
-                        onGoLinkSubmitted={goLink => {
-                            this.props.onGoLinkSubmitted(goLink);
-                            this.setState({ addNewLinkSectionVisible: false });
-                        }}
-                        onAddNewLinkCancelled={() =>
-                            this.setState({ addNewLinkSectionVisible: false })
-                        }
-                    />
+                    <Suspense fallback={<div />}>
+                        <NewGoLink
+                            goLinks={this.props.goLinks}
+                            onGoLinkSubmitted={goLink => {
+                                this.props.onGoLinkSubmitted(goLink);
+                                this.setState({
+                                    addNewLinkSectionVisible: false
+                                });
+                            }}
+                            onAddNewLinkCancelled={() =>
+                                this.setState({
+                                    addNewLinkSectionVisible: false
+                                })
+                            }
+                        />
+                    </Suspense>
                 ) : (
                     <LinkSearcher
                         onSearchTextChanged={this.props.onSearchTextChanged}

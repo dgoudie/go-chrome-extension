@@ -1,30 +1,22 @@
-import { Observable, of } from 'rxjs';
-import { concatMap, map, mapTo } from 'rxjs/operators';
-
 import { GoLinkItem } from '../models/go-link-item';
-import { sortBy } from 'lodash';
 
 export const getAllGoLinks = () =>
-    new Observable<GoLinkItem[]>(observer =>
+    new Promise<GoLinkItem[]>(resolve =>
         chrome.storage.sync.get(['goLinks'], ({ goLinks }) => {
-            observer.next(goLinks);
-            observer.complete();
+            resolve(goLinks);
         })
-    ).pipe(
-        concatMap(urls =>
-            !!urls
-                ? of(urls)
-                : new Observable<void>(observer =>
-                      chrome.storage.sync.set({ goLinks: [] }, () => {
-                          observer.next();
-                          observer.complete();
-                      })
-                  ).pipe(mapTo<any, GoLinkItem[]>([]))
-        )
+    ).then(urls =>
+        !!urls
+            ? Promise.resolve(urls)
+            : new Promise<void>(resolve => {
+                  chrome.storage.sync.set({ goLinks: [] }, () => {
+                      resolve();
+                  });
+              }).then(() => [] as GoLinkItem[])
     );
 
 export const getGoLink = (shortName: string) =>
-    new Observable<string>(observer =>
+    new Promise<string>((resolve, reject) =>
         chrome.storage.sync.get(
             ['goLinks'],
             ({ goLinks }: { goLinks: GoLinkItem[] }) => {
@@ -32,47 +24,34 @@ export const getGoLink = (shortName: string) =>
                     goLink => goLink.shortName === shortName
                 );
                 if (!!goLink) {
-                    observer.next(goLink.fullLink);
+                    resolve(goLink.fullLink);
                 } else {
-                    observer.error();
+                    reject();
                 }
-                observer.complete();
             }
         )
     );
 
-export const addGoLinks = (newGoLinks: GoLinkItem[]) => {
-    return getAllGoLinks().pipe(
-        map(existingGoLinks =>
-            sortBy([...existingGoLinks, ...newGoLinks], 'shortName')
-        ),
-        concatMap(
-            goLinks =>
-                new Observable<GoLinkItem[]>(observer =>
-                    chrome.storage.sync.set({ goLinks }, () => {
-                        observer.next(goLinks);
-                        observer.complete();
-                    })
-                )
-        )
+export const addGoLinks = async (newGoLinks: GoLinkItem[]) => {
+    const existingGoLinks = await getAllGoLinks();
+    const goLinks = [...existingGoLinks, ...newGoLinks].sort((l1, l2) =>
+        l1.shortName.localeCompare(l2.shortName)
+    );
+    return await new Promise<GoLinkItem[]>(resolve =>
+        chrome.storage.sync.set({ goLinks }, () => {
+            resolve(goLinks);
+        })
     );
 };
 
-export const deleteGoLink = (goLinkToDelete: GoLinkItem) => {
-    return getAllGoLinks().pipe(
-        map(existingGoLinks =>
-            existingGoLinks.filter(
-                gl => gl.shortName !== goLinkToDelete.shortName
-            )
-        ),
-        concatMap(
-            goLinks =>
-                new Observable<GoLinkItem[]>(observer =>
-                    chrome.storage.sync.set({ goLinks }, () => {
-                        observer.next(goLinks);
-                        observer.complete();
-                    })
-                )
-        )
+export const deleteGoLink = async (goLinkToDelete: GoLinkItem) => {
+    const existingGoLinks = await getAllGoLinks();
+    const goLinks = existingGoLinks.filter(
+        gl => gl.shortName !== goLinkToDelete.shortName
+    );
+    return await new Promise<GoLinkItem[]>(resolve =>
+        chrome.storage.sync.set({ goLinks }, () => {
+            resolve(goLinks);
+        })
     );
 };

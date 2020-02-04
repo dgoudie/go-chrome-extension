@@ -1,11 +1,10 @@
 const isDevelopment = process.env.WEBPACK_MODE !== 'production';
 
-console.log(isDevelopment);
-
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const glob = require('glob');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -70,7 +69,8 @@ module.exports = {
             filename: isDevelopment ? '[name].css' : '[name].[hash].css',
             chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
         }),
-        new CopyPlugin([{ from: 'src/**/!(*.ts|*.tsx|*.scss)' }])
+        new CopyPlugin([{ from: 'src/**/!(*.ts|*.tsx|*.scss)' }]),
+        new BundleAnalyzerPlugin()
     ],
     devServer: {
         writeToDisk: true,
