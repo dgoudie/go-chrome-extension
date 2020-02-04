@@ -1,7 +1,7 @@
 .list {
-    list-style: none;
-    margin: -10px 8px -10px 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     overflow-y: auto;
     height: 450px;
 
@@ -23,19 +23,34 @@
     }
 }
 .listItem {
-    margin: 10px 0;
-    padding: 0 0 10px;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
     &:not(:last-child) {
         border-bottom: 1px solid var(--border-color);
+    }
+
+    &:hover,
+    &:focus {
+        outline: none;
+        background: var(--blue-color-more-faded);
+    }
+
+    &Info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 .shortName {
     font-weight: 700;
     font-size: 15px;
-    margin-bottom: 4;
+    margin-bottom: 4px;
     color: var(--color-high-emphasis);
 }
 .fullLink {
@@ -53,7 +68,8 @@
     cursor: pointer;
     transition: background 100ms linear;
     padding: 7px;
-    &:hover {
+    &:hover,
+    &:focus {
         background: var(--blue-color-more-faded);
     }
     &:active {

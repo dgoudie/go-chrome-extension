@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import styles from './NewGoLink.module';
 import {
-    Stack,
     FocusZone,
-    FocusZoneTabbableElements
+    FocusZoneTabbableElements,
+    Stack
 } from 'office-ui-fabric-react';
+import React, { Component } from 'react';
+
 import { GoLinkItem } from '../../models/go-link-item';
+import styles from './NewGoLink.module';
 
 const HTTP_REGEX = /https?:\/\//i;
-const URL_REGEX = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+const URL_REGEX = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 interface Props {
     className?: string;
@@ -56,7 +57,7 @@ class NewGoLink extends Component<Props, State> {
                         <span className={styles.inputGoSpan}>go/</span>
                         <input
                             value={shortName}
-                            placeholder='...'
+                            placeholder="..."
                             ref={this.shortNameRef}
                             onChange={(event: any) =>
                                 this.setState({ shortName: event.target.value })
@@ -72,7 +73,7 @@ class NewGoLink extends Component<Props, State> {
                     <div className={fullLinkInputClasses.join(' ')}>
                         <input
                             value={fullLink}
-                            placeholder='google.com'
+                            placeholder="google.com"
                             onChange={(event: any) =>
                                 this.setState({
                                     fullLink: event.target.value
@@ -87,7 +88,10 @@ class NewGoLink extends Component<Props, State> {
                     <Stack horizontal tokens={{ childrenGap: 10 }}>
                         <button
                             className={styles.cancelButton}
-                            onClick={() => this.props.onAddNewLinkCancelled()}
+                            onClick={() =>
+                                !this.state.tempSaved &&
+                                this.props.onAddNewLinkCancelled()
+                            }
                         >
                             Cancel
                         </button>
