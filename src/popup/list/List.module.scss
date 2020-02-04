@@ -23,28 +23,31 @@
     }
 }
 .listItem {
-    background: transparent;
-    outline: none;
-    border: none;
-    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
     &:not(:last-child) {
         border-bottom: 1px solid var(--border-color);
     }
 
-    &:hover,
-    &:focus {
-        outline: none;
-        background: var(--blue-color-more-faded);
-    }
-
     &Info {
+        margin: 7px 0 7px 5px;
+        padding: 5px 10px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        background: transparent;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        flex: 1;
+        border-radius: 7px;
+
+        &:hover,
+        &:focus {
+            outline: none;
+            background: var(--blue-color-more-faded);
+        }
     }
 }
 .shortName {
@@ -70,6 +73,7 @@
     padding: 7px;
     width: 27px;
     height: 27px;
+    margin: 0 10px;
     &:hover,
     &:focus {
         background: var(--blue-color-more-faded);

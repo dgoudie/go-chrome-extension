@@ -7,9 +7,14 @@ import List from './list/List';
 import styles from './App.module';
 
 class App extends Component {
+    listRef = React.createRef<List>();
+
     constructor(props) {
         super(props);
-        getAllGoLinks().then(goLinks => this.setState({ goLinks }));
+        getAllGoLinks().then(goLinks => {
+            this.sendGoLinksToList(goLinks);
+            this.setState({ goLinks });
+        });
     }
     state = {
         searchText: '',
@@ -21,9 +26,9 @@ class App extends Component {
         return (
             <div className={styles.app}>
                 <List
+                    ref={this.listRef}
                     searchText={searchText}
                     className={styles.list}
-                    goLinks={goLinks}
                     onGoLinkDeleted={this._onGoLinkDeleted}
                 />
                 <LinkManager
@@ -39,14 +44,21 @@ class App extends Component {
     }
 
     private _onGoLinkDeleted = (goLink: GoLinkItem) =>
-        deleteGoLink(goLink).then(newGoLinks =>
-            this.setState({ goLinks: newGoLinks })
-        );
+        deleteGoLink(goLink).then(newGoLinks => {
+            this.sendGoLinksToList(newGoLinks);
+            this.setState({ goLinks: newGoLinks });
+        });
 
     private _onGoLinkSubmitted = (goLink: GoLinkItem) =>
-        addGoLinks([goLink]).then(newGoLinks =>
-            this.setState({ goLinks: newGoLinks })
-        );
+        addGoLinks([goLink]).then(newGoLinks => {
+            this.sendGoLinksToList(newGoLinks);
+            this.setState({ goLinks: newGoLinks });
+        });
+
+    private sendGoLinksToList = (goLinks: GoLinkItem[]) => {
+        !!this.listRef.current &&
+            this.listRef.current.setGoLinksInitializeFuse(goLinks);
+    };
 }
 
 export default App;

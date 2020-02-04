@@ -17,38 +17,40 @@ const FUSE_OPTIONS: FuseOptions<GoLinkItem> = {
 };
 
 interface Props {
-    goLinks: GoLinkItem[];
     className?: string;
     onGoLinkDeleted: (_: GoLinkItem) => void;
     searchText: string;
 }
 
 interface State {
+    goLinks: GoLinkItem[];
     fuse: Fuse<GoLinkItem, FuseOptions<GoLinkItem>>;
 }
 
 export default class List extends Component<Props, State> {
     state = {
-        fuse: new Fuse(this.props.goLinks, FUSE_OPTIONS)
+        goLinks: [],
+        fuse: new Fuse([], FUSE_OPTIONS)
     };
 
     render() {
-        const { searchText, goLinks } = this.props;
+        const { goLinks } = this.state;
+        const { searchText } = this.props;
         const goLinksToUse = !!searchText
             ? (this.state.fuse.search(searchText) as GoLinkItem[])
             : goLinks;
         const goLinkItems = goLinksToUse.map(goLink => (
-            <button
+            <div
                 key={goLink.shortName}
                 className={styles.listItem}
                 onClick={() => chrome.tabs.create({ url: goLink.fullLink })}
             >
-                <div className={styles.listItemInfo}>
+                <button className={styles.listItemInfo}>
                     <div className={styles.shortName}>
                         go/{goLink.shortName}
                     </div>
                     <div className={styles.fullLink}>{goLink.fullLink}</div>
-                </div>
+                </button>
                 <button
                     onClick={event =>
                         this._onDeleteButtonClicked(event, goLink)
@@ -60,7 +62,7 @@ export default class List extends Component<Props, State> {
                         icon={faTimes}
                     />
                 </button>
-            </button>
+            </div>
         ));
         return (
             <div className={`${styles.list} ${this.props.className}`}>
@@ -77,7 +79,7 @@ export default class List extends Component<Props, State> {
         this.props.onGoLinkDeleted(goLink);
     };
 
-    componentWillReceiveProps(nextProps: Props) {
-        this.setState({ fuse: new Fuse(nextProps.goLinks, FUSE_OPTIONS) });
-    }
+    public setGoLinksInitializeFuse = (goLinks: GoLinkItem[]) => {
+        this.setState({ goLinks, fuse: new Fuse(goLinks, FUSE_OPTIONS) });
+    };
 }
