@@ -57,6 +57,7 @@
 }
 .fullLink {
     color: var(--color-medium-emphasis);
+    word-break: break-word;
 }
 .listItemDeleteButton {
     color: var(--blue-color);
@@ -73,6 +74,7 @@
     width: 27px;
     height: 27px;
     margin: 0 10px;
+    flex-shrink: 0;
     &:hover,
     &:focus {
         background: var(--blue-color-more-faded);
