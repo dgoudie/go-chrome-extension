@@ -28,9 +28,11 @@ class LinkManager extends Component<Props, {}> {
                             goLinks={this.props.goLinks}
                             onGoLinkSubmitted={goLink => {
                                 this.props.onGoLinkSubmitted(goLink);
-                                this.setState({
-                                    addNewLinkSectionVisible: false
-                                });
+                                setTimeout(() => {
+                                    this.setState({
+                                        addNewLinkSectionVisible: false
+                                    });
+                                }, 1500);
                             }}
                             onAddNewLinkCancelled={() =>
                                 this.setState({

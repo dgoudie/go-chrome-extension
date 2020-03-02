@@ -44,6 +44,7 @@ class NewGoLink extends Component<Props, State> {
                 <div className={shortNameInputClasses.join(' ')}>
                     <span className={styles.inputGoSpan}>go/</span>
                     <input
+                        disabled={tempSaved}
                         value={shortName}
                         placeholder="..."
                         ref={this.shortNameRef}
@@ -58,6 +59,7 @@ class NewGoLink extends Component<Props, State> {
                 </div>
                 <div className={fullLinkInputClasses.join(' ')}>
                     <input
+                        disabled={tempSaved}
                         value={fullLink}
                         placeholder="google.com"
                         onChange={(event: any) =>
@@ -73,6 +75,7 @@ class NewGoLink extends Component<Props, State> {
                 </div>
                 <div className={styles.buttonBar}>
                     <button
+                        disabled={tempSaved}
                         className={styles.cancelButton}
                         onClick={() =>
                             !this.state.tempSaved &&
@@ -82,6 +85,7 @@ class NewGoLink extends Component<Props, State> {
                         Cancel
                     </button>
                     <button
+                        disabled={tempSaved}
                         className={`${styles.submitButton} ${
                             tempSaved ? styles.saved : ''
                         }`}
@@ -117,11 +121,8 @@ class NewGoLink extends Component<Props, State> {
             fullLink = 'http://' + fullLink;
         }
         const goLink: GoLinkItem = { shortName, fullLink };
-        this.setState({ tempSaved: true });
-        setTimeout(() => {
-            this.setState({ shortName: '', fullLink: '', tempSaved: false });
-            this.props.onGoLinkSubmitted(goLink);
-        }, 1500);
+        this.setState({ tempSaved: true, shortName: '', fullLink: '' });
+        this.props.onGoLinkSubmitted(goLink);
     };
 
     private buildClassLists = (state: State) => {
