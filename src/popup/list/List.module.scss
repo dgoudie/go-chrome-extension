@@ -1,3 +1,5 @@
+@import '../mixins';
+
 .list {
     display: flex;
     flex-direction: column;
@@ -60,26 +62,6 @@
     word-break: break-word;
 }
 .listItemDeleteButton {
-    color: var(--blue-color);
-    background: transparent;
-    border: none;
-    outline: none;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 100ms linear;
-    padding: 7px;
-    width: 27px;
-    height: 27px;
+    @include miniButton;
     margin: 0 10px;
-    flex-shrink: 0;
-    &:hover,
-    &:focus {
-        background: var(--blue-color-more-faded);
-    }
-    &:active {
-        background: var(--blue-color-faded);
-    }
 }

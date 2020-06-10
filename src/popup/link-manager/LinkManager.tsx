@@ -11,12 +11,13 @@ interface Props {
     className?: string;
     onGoLinkSubmitted: (_: GoLinkItem) => void;
     onSearchTextChanged: (_: string) => void;
+    onOptionsMenuRequested: () => void;
     goLinks: GoLinkItem[];
 }
 
 class LinkManager extends Component<Props, {}> {
     state = {
-        addNewLinkSectionVisible: false
+        addNewLinkSectionVisible: false,
     };
     render() {
         const { addNewLinkSectionVisible } = this.state;
@@ -26,17 +27,17 @@ class LinkManager extends Component<Props, {}> {
                     <Suspense fallback={<div />}>
                         <NewGoLink
                             goLinks={this.props.goLinks}
-                            onGoLinkSubmitted={goLink => {
+                            onGoLinkSubmitted={(goLink) => {
                                 this.props.onGoLinkSubmitted(goLink);
                                 setTimeout(() => {
                                     this.setState({
-                                        addNewLinkSectionVisible: false
+                                        addNewLinkSectionVisible: false,
                                     });
                                 }, 1500);
                             }}
                             onAddNewLinkCancelled={() =>
                                 this.setState({
-                                    addNewLinkSectionVisible: false
+                                    addNewLinkSectionVisible: false,
                                 })
                             }
                         />
@@ -46,6 +47,9 @@ class LinkManager extends Component<Props, {}> {
                         onSearchTextChanged={this.props.onSearchTextChanged}
                         onAddNewButtonClicked={() =>
                             this.setState({ addNewLinkSectionVisible: true })
+                        }
+                        onOptionsMenuRequested={
+                            this.props.onOptionsMenuRequested
                         }
                     />
                 )}

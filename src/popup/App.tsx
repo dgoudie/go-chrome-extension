@@ -4,6 +4,7 @@ import { addGoLinks, deleteGoLink, getAllGoLinks } from '../utils/storage';
 import { GoLinkItem } from '../models/go-link-item';
 import LinkManager from './link-manager/LinkManager';
 import List from './list/List';
+import OptionsMenu from './options-menu/OptionsMenu';
 import styles from './App.module';
 
 class App extends Component {
@@ -11,14 +12,15 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        getAllGoLinks().then(goLinks => {
+        getAllGoLinks().then((goLinks) => {
             this.sendGoLinksToList(goLinks);
             this.setState({ goLinks });
         });
     }
     state = {
         searchText: '',
-        goLinks: []
+        goLinks: [],
+        optionsVisible: true,
     };
 
     render() {
@@ -32,25 +34,33 @@ class App extends Component {
                     onGoLinkDeleted={this._onGoLinkDeleted}
                 />
                 <LinkManager
-                    onSearchTextChanged={text =>
+                    onSearchTextChanged={(text) =>
                         this.setState({ searchText: text })
                     }
                     className={styles.manager}
                     onGoLinkSubmitted={this._onGoLinkSubmitted}
                     goLinks={goLinks}
+                    onOptionsMenuRequested={() =>
+                        this.setState({ optionsVisible: true })
+                    }
                 />
+                {this.state.optionsVisible && (
+                    <OptionsMenu
+                        onClose={() => this.setState({ optionsVisible: false })}
+                    />
+                )}
             </div>
         );
     }
 
     private _onGoLinkDeleted = (goLink: GoLinkItem) =>
-        deleteGoLink(goLink).then(newGoLinks => {
+        deleteGoLink(goLink).then((newGoLinks) => {
             this.sendGoLinksToList(newGoLinks);
             this.setState({ goLinks: newGoLinks });
         });
 
     private _onGoLinkSubmitted = (goLink: GoLinkItem) =>
-        addGoLinks([goLink]).then(newGoLinks => {
+        addGoLinks([goLink]).then((newGoLinks) => {
             this.sendGoLinksToList(newGoLinks);
             this.setState({ goLinks: newGoLinks });
         });

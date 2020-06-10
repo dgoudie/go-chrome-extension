@@ -1,6 +1,9 @@
 @import '../mixins';
 
 .linkSearcher {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     div:not(:last-child) {
         margin-bottom: 10px;
     }
@@ -39,11 +42,19 @@
     background: var(--border-color);
 }
 
-.buttonWrapper {
-    flex: 1;
-}
-
 .button {
     @include standardButton;
     @include primaryButton;
+    align-self: flex-start;
+}
+
+.menuIcon {
+    flex: 1;
+    align-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    button {
+        @include miniButton;
+    }
 }

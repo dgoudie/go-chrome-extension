@@ -1,0 +1,45 @@
+@import '../mixins';
+
+.optionsMenuWrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(black, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.optionsMenu {
+    background: var(--background-light);
+    padding: 16px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+}
+.closeButton {
+    @include miniButton;
+    align-self: flex-end;
+    margin-bottom: 16px;
+    z-index: 1;
+}
+.optionsMenuHome {
+    margin-top: -42px;
+    display: flex;
+    flex-direction: column;
+
+    &Header {
+        margin: 0 0 24px;
+    }
+
+    button {
+        @include standardButton;
+        @include primaryButton;
+        display: flex;
+
+        &:not(:last-child) {
+            margin-bottom: 8px;
+        }
+    }
+}

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons/faEllipsisV';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import styles from './LinkSearcher.module';
 
 interface Props {
     onAddNewButtonClicked: () => void;
     onSearchTextChanged: (_: string) => void;
+    onOptionsMenuRequested: () => void;
 }
 
 class LinkSearcher extends Component<Props, {}> {
@@ -22,18 +24,21 @@ class LinkSearcher extends Component<Props, {}> {
                     <input
                         placeholder="Search Go Links..."
                         ref={this.searchRef}
-                        onChange={event =>
+                        onChange={(event) =>
                             this.props.onSearchTextChanged(event.target.value)
                         }
                     />
                 </div>
                 <div className={styles.divider}></div>
-                <div className={styles.buttonWrapper}>
-                    <button
-                        className={styles.button}
-                        onClick={() => this.props.onAddNewButtonClicked()}
-                    >
-                        Create Go Link
+                <button
+                    className={styles.button}
+                    onClick={() => this.props.onAddNewButtonClicked()}
+                >
+                    Create Go Link
+                </button>
+                <div className={styles.menuIcon}>
+                    <button onClick={this.props.onOptionsMenuRequested}>
+                        <FontAwesomeIcon icon={faEllipsisV} />
                     </button>
                 </div>
             </div>

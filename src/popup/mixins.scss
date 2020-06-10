@@ -32,3 +32,27 @@
         background: var(--button-color-hover);
     }
 }
+
+@mixin miniButton {
+    color: var(--blue-color);
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 100ms linear;
+    padding: 7px;
+    width: 27px;
+    height: 27px;
+    flex-shrink: 0;
+    &:hover,
+    &:focus {
+        background: var(--blue-color-more-faded);
+    }
+    &:active {
+        background: var(--blue-color-faded);
+    }
+}
