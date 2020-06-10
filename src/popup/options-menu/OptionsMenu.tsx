@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 
+import ExportToJson from './export-to-json/ExportToJson';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { GoLinkItem } from '../../models/go-link-item';
+import ImportFromJson from './import-from-json/ImportFromJson';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import styles from './OptionsMenu.module';
 
 type SettingsMenuOption = null | 'exportJson' | 'importJson';
 
 interface Props {
+    goLinks: GoLinkItem[];
+    onGoLinksAdded: (_: GoLinkItem[]) => void;
     onClose: () => void;
 }
 
-export default function OptionsMenu({ onClose }: Props) {
+export default function OptionsMenu({
+    goLinks,
+    onGoLinksAdded,
+    onClose,
+}: Props) {
     const [settingsMenuOption, setSettingsMenuOption] = useState<
         SettingsMenuOption
     >(null);
@@ -20,6 +29,22 @@ export default function OptionsMenu({ onClose }: Props) {
         case null:
             pageComponent = (
                 <OptionsMenuHome menuOptionRequested={setSettingsMenuOption} />
+            );
+            break;
+        case 'exportJson':
+            pageComponent = (
+                <ExportToJson
+                    goLinks={goLinks}
+                    onClose={() => setSettingsMenuOption(null)}
+                />
+            );
+            break;
+        case 'importJson':
+            pageComponent = (
+                <ImportFromJson
+                    validatedGoLinksAdded={onGoLinksAdded}
+                    onClose={() => setSettingsMenuOption(null)}
+                />
             );
     }
 

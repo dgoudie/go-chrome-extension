@@ -6,23 +6,6 @@
     align-items: stretch;
     overflow-y: auto;
     height: 450px;
-
-    &::-webkit-scrollbar {
-        width: 15px;
-        height: 10px;
-        background: transparent;
-        cursor: pointer;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: var(--blue-color);
-        border-radius: 10px;
-        border-color: transparent;
-        border-style: solid;
-        border-width: 3px;
-        background-clip: padding-box;
-        min-height: 75px;
-    }
 }
 .listItem {
     display: flex;

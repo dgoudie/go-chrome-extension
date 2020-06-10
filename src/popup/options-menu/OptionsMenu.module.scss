@@ -16,7 +16,13 @@
     padding: 16px;
     border-radius: 14px;
     display: flex;
+    max-height: calc(100vh - 72px);
+    max-width: calc(100vw - 72px);
     flex-direction: column;
+
+    > div {
+        margin-top: -42px;
+    }
 }
 .closeButton {
     @include miniButton;
@@ -25,7 +31,6 @@
     z-index: 1;
 }
 .optionsMenuHome {
-    margin-top: -42px;
     display: flex;
     flex-direction: column;
 

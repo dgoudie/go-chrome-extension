@@ -1,0 +1,35 @@
+@import '../../mixins';
+
+.root {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    pre {
+        background: var(--background);
+        padding: 12px;
+        border-radius: 10px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-y: auto;
+        font-size: 1rem;
+    }
+}
+.header {
+    display: flex;
+    align-items: flex-start;
+
+    button {
+        @include miniButton;
+    }
+
+    h2 {
+        margin: 0 0 24px 8px;
+    }
+}
+
+.copyToClipboard {
+    @include standardButton;
+    @include primaryButton;
+    align-self: flex-end;
+    flex-shrink: 0;
+}

@@ -20,7 +20,7 @@ class App extends Component {
     state = {
         searchText: '',
         goLinks: [],
-        optionsVisible: true,
+        optionsVisible: false,
     };
 
     render() {
@@ -46,6 +46,8 @@ class App extends Component {
                 />
                 {this.state.optionsVisible && (
                     <OptionsMenu
+                        goLinks={goLinks}
+                        onGoLinksAdded={this._onGoLinksAdded}
                         onClose={() => this.setState({ optionsVisible: false })}
                     />
                 )}
@@ -60,7 +62,10 @@ class App extends Component {
         });
 
     private _onGoLinkSubmitted = (goLink: GoLinkItem) =>
-        addGoLinks([goLink]).then((newGoLinks) => {
+        this._onGoLinksAdded([goLink]);
+
+    private _onGoLinksAdded = (goLinks: GoLinkItem[]) =>
+        addGoLinks(goLinks).then((newGoLinks) => {
             this.sendGoLinksToList(newGoLinks);
             this.setState({ goLinks: newGoLinks });
         });

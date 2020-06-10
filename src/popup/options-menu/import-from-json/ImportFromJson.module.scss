@@ -1,0 +1,54 @@
+@import '../../mixins';
+
+.root {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    textarea {
+        resize: none;
+        width: 75vw;
+        height: 75vh;
+        border-radius: 10px;
+        background-color: var(--background);
+        padding: 8px;
+        color: var(--color-high-emphasis);
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        &::placeholder {
+            color: var(--color-medium-emphasis);
+        }
+    }
+}
+.header {
+    display: flex;
+    align-items: flex-start;
+
+    button {
+        @include miniButton;
+    }
+
+    h2 {
+        margin: 0 0 24px 8px;
+    }
+}
+.validationMessageAndSubmitButton {
+    height: 32px;
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 8px;
+
+    span {
+        margin-left: 8px;
+        flex: 1;
+    }
+
+    button {
+        @include standardButton;
+        @include primaryButton;
+        align-self: flex-end;
+    }
+}

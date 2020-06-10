@@ -1,14 +1,14 @@
 import { GoLinkItem } from '../models/go-link-item';
 
 export const getAllGoLinks = () =>
-    new Promise<GoLinkItem[]>(resolve =>
+    new Promise<GoLinkItem[]>((resolve) =>
         chrome.storage.sync.get(['goLinks'], ({ goLinks }) => {
             resolve(goLinks);
         })
-    ).then(urls =>
+    ).then((urls) =>
         !!urls
             ? Promise.resolve(urls)
-            : new Promise<void>(resolve => {
+            : new Promise<void>((resolve) => {
                   chrome.storage.sync.set({ goLinks: [] }, () => {
                       resolve();
                   });
@@ -21,7 +21,7 @@ export const getGoLink = (shortName: string) =>
             ['goLinks'],
             ({ goLinks }: { goLinks: GoLinkItem[] }) => {
                 const goLink = goLinks.find(
-                    goLink => goLink.shortName === shortName
+                    (goLink) => goLink.shortName === shortName
                 );
                 if (!!goLink) {
                     resolve(goLink.fullLink);
@@ -34,10 +34,14 @@ export const getGoLink = (shortName: string) =>
 
 export const addGoLinks = async (newGoLinks: GoLinkItem[]) => {
     const existingGoLinks = await getAllGoLinks();
-    const goLinks = [...existingGoLinks, ...newGoLinks].sort((l1, l2) =>
+    const goLinksMap = [...existingGoLinks, ...newGoLinks].reduce(
+        (acc, gl) => acc.set(gl.shortName, gl),
+        new Map<string, GoLinkItem>()
+    );
+    const goLinks = Array.from(goLinksMap.values()).sort((l1, l2) =>
         l1.shortName.localeCompare(l2.shortName)
     );
-    return await new Promise<GoLinkItem[]>(resolve =>
+    return await new Promise<GoLinkItem[]>((resolve) =>
         chrome.storage.sync.set({ goLinks }, () => {
             resolve(goLinks);
         })
@@ -47,9 +51,9 @@ export const addGoLinks = async (newGoLinks: GoLinkItem[]) => {
 export const deleteGoLink = async (goLinkToDelete: GoLinkItem) => {
     const existingGoLinks = await getAllGoLinks();
     const goLinks = existingGoLinks.filter(
-        gl => gl.shortName !== goLinkToDelete.shortName
+        (gl) => gl.shortName !== goLinkToDelete.shortName
     );
-    return await new Promise<GoLinkItem[]>(resolve =>
+    return await new Promise<GoLinkItem[]>((resolve) =>
         chrome.storage.sync.set({ goLinks }, () => {
             resolve(goLinks);
         })

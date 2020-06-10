@@ -21,6 +21,10 @@
     &:active {
         background: var(--blue-color-faded);
     }
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 }
 
 @mixin primaryButton {
