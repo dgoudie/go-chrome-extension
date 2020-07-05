@@ -5,6 +5,16 @@ const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ZipPlugin = require('zip-webpack-plugin')
 
+let plugins = [
+    new MiniCssExtractPlugin({
+        filename: isDevelopment ? '[name].css' : '[name].[hash].css',
+        chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
+    }),
+    new CopyPlugin([{ from: '**/!(*.ts|*.tsx|*.scss)', context: './src/' }]),
+]
+
+!isDevelopment && (plugins = [...plugins, new ZipPlugin({filename: `${process.env.npm_package_name}-${process.env.npm_package_version}.zip`, path: '../'})])
+
 module.exports = {
     devtool: 'inline-source-map',
     entry: {
@@ -63,14 +73,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.scss']
     },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-            chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
-        }),
-        new CopyPlugin([{ from: '**/!(*.ts|*.tsx|*.scss)', context: './src/' }]),
-        new ZipPlugin({filename: `${process.env.npm_package_name}-${process.env.npm_package_version}.zip`, path: '../'})
-    ],
+    plugins,
     devServer: {
         writeToDisk: true,
         disableHostCheck: true
