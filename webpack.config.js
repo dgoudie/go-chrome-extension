@@ -8,14 +8,12 @@ module.exports = (env, argv) => {
     const isDevelopment = argv.mode === 'development';
 
     let plugins = [
-        new MiniCssExtractPlugin({
-            filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-            chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
-        }),
+        new MiniCssExtractPlugin(),
         new CopyPlugin([{ from: '**/!(*.ts|*.tsx|*.scss)', context: './src/' }]),
     ]
     
     !isDevelopment && (plugins = [...plugins, new ZipPlugin({filename: `${process.env.npm_package_name}-${process.env.npm_package_version}.zip`, path: '../'})])
+
     return {
         devtool: 'inline-source-map',
         entry: {
@@ -35,9 +33,7 @@ module.exports = (env, argv) => {
                 {
                     test: /\.module\.s(a|c)ss$/,
                     loader: [
-                        isDevelopment
-                            ? 'style-loader'
-                            : MiniCssExtractPlugin.loader,
+                        MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
@@ -57,9 +53,7 @@ module.exports = (env, argv) => {
                     test: /\.s(a|c)ss$/,
                     exclude: /\.module.(s(a|c)ss)$/,
                     loader: [
-                        isDevelopment
-                            ? 'style-loader'
-                            : MiniCssExtractPlugin.loader,
+                        MiniCssExtractPlugin.loader,
                         'css-loader',
                         {
                             loader: 'sass-loader',
