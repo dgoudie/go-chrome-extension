@@ -6,7 +6,7 @@
         "build": "rimraf ./dist && webpack --mode production",
         "start": "rimraf ./dist && concurrently \"node extension-reloader.js\" \"webpack-dev-server --mode development --progress --color\"",
         "version": "node utils/bump-manifest-version",
-        "bump": "npm --no-git-tag-version version minor"
+        "version:manifest": "npm --no-git-tag-version version minor"
     },
     "author": "",
     "license": "ISC",
