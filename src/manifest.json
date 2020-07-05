@@ -1,6 +1,6 @@
 {
     "name": "go/chrome-extension",
-    "version": "1.4",
+    "version": "1.5",
     "description": "URL Shortener",
     "background": {
         "scripts": ["background.js"],

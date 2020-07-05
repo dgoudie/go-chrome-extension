@@ -3,12 +3,13 @@ const isDevelopment = process.env.WEBPACK_MODE !== 'production';
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ZipPlugin = require('zip-webpack-plugin')
 
 module.exports = {
     devtool: 'inline-source-map',
     entry: {
-        'src/popup/index': './src/popup/index.tsx',
-        'src/background': './src/background.ts'
+        'popup/index': './src/popup/index.tsx',
+        'background': './src/background.ts'
     },
     output: {
         filename: '[name].js',
@@ -67,7 +68,8 @@ module.exports = {
             filename: isDevelopment ? '[name].css' : '[name].[hash].css',
             chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
         }),
-        new CopyPlugin([{ from: 'src/**/!(*.ts|*.tsx|*.scss)' }])
+        new CopyPlugin([{ from: '**/!(*.ts|*.tsx|*.scss)', context: './src/' }]),
+        new ZipPlugin({filename: `${process.env.npm_package_name}-${process.env.npm_package_version}.zip`, path: '../'})
     ],
     devServer: {
         writeToDisk: true,
