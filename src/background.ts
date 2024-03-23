@@ -1,20 +1,9 @@
-import { getGoLink } from './utils/storage';
+import { registerRules } from './utils/link-utils';
 
-const GO_REGEX = /http:\/\/go\/(.+)\//i;
-const filter = {
-    urls: ['*://go/*']
-};
+chrome.runtime.onStartup.addListener(() => {
+  registerRules();
+});
 
-const logOnBefore = (details: chrome.webRequest.WebRequestBodyDetails) => {
-    const linkRequested = details.url.replace(GO_REGEX, '$1').toLowerCase();
-    getGoLink(linkRequested).then(url =>
-        chrome.tabs.update({
-            url
-        })
-    );
-    return { cancel: true };
-};
-
-chrome.webRequest.onBeforeRequest.addListener(logOnBefore, filter, [
-    'blocking'
-]);
+chrome.runtime.onInstalled.addListener(() => {
+  registerRules();
+});

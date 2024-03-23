@@ -1,4 +1,5 @@
 export interface GoLinkItem {
-    shortName: string;
-    fullLink: string;
+  id: string;
+  shortName: string;
+  fullLink: string;
 }

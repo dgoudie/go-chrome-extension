@@ -1,7 +1,11 @@
 {
-    "compilerOptions": {
-        "sourceMap": true /* Generates corresponding '.map' file. */,
-        "jsx": "react",
-        "esModuleInterop": true
-    }
+  "compilerOptions": {
+    "sourceMap": true /* Generates corresponding '.map' file. */,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "types": ["chrome"],
+    "module": "NodeNext",
+    "target": "ES2022",
+    "moduleResolution": "NodeNext"
+  }
 }
