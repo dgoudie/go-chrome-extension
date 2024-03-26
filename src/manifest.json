@@ -1,6 +1,6 @@
 {
     "name": "go/chrome-extension",
-    "version": "1.9",
+    "version": "1.10",
     "description": "URL Shortener",
     "action": {
         "default_popup": "popup/index.html"
